@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import forms from '~/apollo/queries/fetch-forms.gql'
+import forms from '~/apollo/queries/forms/fetch-all.gql'
 
 export default {
   apollo: {
@@ -16,7 +16,7 @@ export default {
     }
   },
   head: {
-    title: 'Test Heading'
+    title: 'Forms!'
   }
 }
 </script>
