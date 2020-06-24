@@ -1,0 +1,8 @@
+query MyQuery {
+  published_form {
+    id
+    userId
+    headline
+    text
+  }
+}

@@ -1,5 +1,6 @@
 
 module.exports = {
+  telemetry: false,
   mode: 'spa',
   /*
   ** Headers of the page
@@ -45,13 +46,21 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/apollo'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  consent: 1,
+  apollo: {
+    includeNodeModules: true,
+    clientConfigs: {
+      default: '~/apollo/client-configs/default.js'
+    }
   },
   /*
   ** Build configuration
