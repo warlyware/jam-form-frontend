@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>jam-form</h1>
-    {{published_form}}
+    <h1 class="text-2xl">Forms!</h1>
+    <nuxt-link to="/me">Dashboard</nuxt-link>
   </div>
 </template>
 

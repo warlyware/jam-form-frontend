@@ -1,7 +1,7 @@
 
 module.exports = {
   telemetry: false,
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
