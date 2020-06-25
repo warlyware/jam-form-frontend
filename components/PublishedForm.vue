@@ -10,7 +10,7 @@
     class="p-2 border border-black"
     type="text">
     <br>
-    <button style="padding: 8px; background-color: blue; color: white; margin-top: 8px;"
+    <button style="padding: 8px; background-color: blue; color: white; margin-top: 8px; height: 42px;"
     @click="addEmail">
       {{ form.buttonText || 'Subscribe' }}
     </button>
@@ -41,8 +41,7 @@ export default {
         mutation: addEmail,
         variables: {
           email: this.email,
-          campaignId: this.form.campaignId,
-          userId: this.currentUser.id
+          campaignId: this.form.campaignId
         }
       })
     }
