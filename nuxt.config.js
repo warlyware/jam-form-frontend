@@ -16,6 +16,9 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  env: {
+    HASURA_URL: process.env.HASURA_URL
+  },
   /*
   ** Customize the progress-bar color
   */
