@@ -1,7 +1,5 @@
 <template>
-  <div v-if="id && published_form">
-    Form {{ published_form }}
-  </div>
+  <published-form v-if="id && published_form[0]" :form="published_form[0]" />
   <div v-else>
     Problem loading form
   </div>
@@ -9,8 +7,12 @@
 
 <script>
 import forms from '~/apollo/queries/forms/fetch-by-id.gql'
+import PublishedForm from '~/components/PublishedForm.vue'
 
 export default {
+  components: {
+    PublishedForm
+  },
   data() {
     return {
       id: this.$route.params.id
