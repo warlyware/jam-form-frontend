@@ -1,8 +1,9 @@
-query MyQuery {
+query {
   published_form {
     id
     userId
     headline
     text
+    campaignId
   }
 }

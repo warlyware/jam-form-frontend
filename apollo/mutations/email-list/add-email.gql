@@ -1,0 +1,7 @@
+mutation ($email: String, $campaignId: uuid, $userId: uuid) {
+  insert_email_list(objects: { email: $email, campaignId: $campaignId, userId: $userId }) {
+    returning {
+      email
+    }
+  }
+}

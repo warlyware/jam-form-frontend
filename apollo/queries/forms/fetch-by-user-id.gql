@@ -1,7 +1,8 @@
-query MyQuery($userId: uuid) {
+query ($userId: uuid) {
   published_form(where: {userId: {_eq: $userId}}) {
     id
     headline
     text
+    campaignId
   }
 }
