@@ -10,7 +10,7 @@
     class="p-2 border border-black"
     type="text">
     <br>
-    <button class="bg-blue-600 p-2 rounded mt-4 text-white"
+    <button style="padding: 8px; background-color: blue; color: white; margin-top: 8px;"
     @click="addEmail">
       {{ form.buttonText || 'Subscribe' }}
     </button>
