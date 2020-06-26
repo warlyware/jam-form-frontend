@@ -1,7 +1,7 @@
 
 module.exports = {
   telemetry: false,
-  mode: 'universal',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -14,6 +14,10 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: 'https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js' },
+      { src: 'https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js' }
     ]
   },
   env: {
@@ -50,8 +54,34 @@ module.exports = {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/apollo'
+    '@nuxtjs/apollo',
+    '@nuxtjs/firebase'
   ],
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyC-gFwxJu7-HBS4EIrAzT4WI_QAiKRRN44',
+      authDomain: 'jam-form.firebaseapp.com',
+      databaseURL: 'https://jam-form.firebaseio.com',
+      projectId: 'jam-form',
+      storageBucket: 'jam-form.appspot.com',
+      messagingSenderId: '295947623681',
+      appId: '1:295947623681:web:0d2314ded9b25ab832cf00',
+      measurementId: 'G-M9EJ0E2L5J'
+    },
+    services: {
+      auth: {
+        persistence: 'local', // default
+        // it is recommended to configure either a mutation or action but you can set both
+        initialize: {
+          // onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION'
+          // onAuthStateChangedAction: 'ON_AUTH_STATE_CHANGED_ACTION'
+        },
+        ssr: false // default
+      },
+      firestore: true,
+      functions: true
+    }
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -84,11 +114,4 @@ module.exports = {
       }
     }
   }
-  // build: {
-  //   /*
-  //   ** You can extend webpack config here
-  //   */
-  //   extend (config, ctx) {
-  //   }
-  // }
 }
