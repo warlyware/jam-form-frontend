@@ -7,6 +7,7 @@
 // }
 
 const initialState = {
+  authStatus: 'out',
   currentUser: {
     id: null,
     username: null
@@ -18,8 +19,7 @@ export const state = () => initialState
 export const mutations = {
   setAuthState(state, { status, user }) {
     if (user) {
-      debugger
-      state.status = status
+      state.authStatus = status
       const { uid, email } = user
       state.currentUser = { id: uid, username: email }
     }
@@ -30,7 +30,6 @@ export const mutations = {
 
 export const actions = {
   ON_AUTH_STATE_CHANGED_ACTION({ commit }, { claims, authUser }) {
-    console.log('onAuthStateChanged', { claims, authUser })
     // debugger
     const user = authUser
     if (user) {
@@ -47,10 +46,10 @@ export const actions = {
           .ref('metadata/' + user.uid + '/refreshTime')
 
         metadataRef.on('value', async data => {
-          // if (!data.exists) { return }
+          if (!data.exists) { return }
           // Force refresh to pick up the latest custom claims changes.
-          // const token = await user.getIdToken(true)
-          // commit('setAuthState', { status: 'in', user, token })
+          const token = await user.getIdToken(true)
+          commit('setAuthState', { status: 'in', user, token })
         })
       }
     }

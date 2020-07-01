@@ -73,7 +73,6 @@ module.exports = {
         persistence: 'local', // default
         // it is recommended to configure either a mutation or action but you can set both
         initialize: {
-          onAuthStateChangedMutation: 'setAuthState',
           onAuthStateChangedAction: 'ON_AUTH_STATE_CHANGED_ACTION'
         },
         ssr: false // default

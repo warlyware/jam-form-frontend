@@ -1,11 +1,8 @@
 <template>
   <div class="container">
     <h1 class="text-2xl">
-      Forms!
+      Formium Alpha
     </h1>
-    <nuxt-link to="/me">
-      Dashboard
-    </nuxt-link>
     <div>
       <label for="username">
         Email
@@ -23,16 +20,20 @@
         class="border border-black p-2">
       </label>
     </div>
-    <button @click="createUser">
-      Sign Up
-    </button>
-    <button @click="login">
-      Login
-    </button>
+    <div class="row">
+      <button class="p-2 border border-black m-2 rounded-lg shadow-lg hover:shadow-2xl" @click="createUser">
+        Sign Up
+      </button>
+      <button class="p-2 border border-black m-2 rounded-lg shadow-lg hover:shadow-2xl" @click="login">
+        Login
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import forms from '~/apollo/queries/forms/fetch-all.gql'
 
 export default {
@@ -48,25 +49,34 @@ export default {
       query: forms
     }
   },
+  computed: mapState(['currentUser', 'authStatus']),
   methods: {
     async createUser() {
-      console.log(this)
       try {
         await this.$fireAuth.createUserWithEmailAndPassword(
           this.email,
           this.password
         )
+        console.log(this.authStatus, this.currentUser)
+        debugger
+        if (this.authStatus === 'in' && this.currentUser.id) {
+          this.$router.push('/me')
+        }
       } catch (e) {
         console.error(e)
       }
     },
     async login() {
-      console.log(this)
       try {
         await this.$fireAuth.signInWithEmailAndPassword(
           this.email,
           this.password
         )
+        console.log(this.authStatus, this.currentUser)
+        debugger
+        if (this.authStatus === 'in' && this.currentUser.id) {
+          this.$router.push('/me')
+        }
       } catch (e) {
         console.error(e)
       }
