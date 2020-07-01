@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="text-5xl">hi {{ currentUser.username }}!</h1>
+    <h1 class="text-5xl">hi {{ currentUser }}!</h1>
     <h2 class="text-2xl">My Forms</h2>
     <ul>
       <li v-for="form in published_form" :key="form.id">

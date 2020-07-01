@@ -1,20 +1,33 @@
 <template>
   <div class="container">
-    <h1 class="text-2xl">Forms!</h1>
-    <nuxt-link to="/me">Dashboard</nuxt-link>
+    <h1 class="text-2xl">
+      Forms!
+    </h1>
+    <nuxt-link to="/me">
+      Dashboard
+    </nuxt-link>
     <div>
       <label for="username">
         Email
-        <input type="text" name="username" v-model="email" class="border border-black p-2">
+        <input v-model="email"
+        type="text"
+        name="username"
+        class="border border-black p-2">
       </label>
       <br>
       <label for="password" class="block mt-2">
         Passord
-        <input type="text" name="password" v-model="password" class="border border-black p-2">
+        <input v-model="password"
+        type="password"
+        name="password"
+        class="border border-black p-2">
       </label>
     </div>
     <button @click="createUser">
       Sign Up
+    </button>
+    <button @click="login">
+      Login
     </button>
   </div>
 </template>
@@ -40,6 +53,17 @@ export default {
       console.log(this)
       try {
         await this.$fireAuth.createUserWithEmailAndPassword(
+          this.email,
+          this.password
+        )
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async login() {
+      console.log(this)
+      try {
+        await this.$fireAuth.signInWithEmailAndPassword(
           this.email,
           this.password
         )
