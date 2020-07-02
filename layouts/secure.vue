@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <nuxt />
+    <nuxt class="mt-16" />
   </div>
 </template>
 

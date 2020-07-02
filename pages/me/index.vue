@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mx-auto mt-24">
+  <div class="text-center mx-auto">
     <h1 class="text-2xl">My Forms</h1>
     <ul>
       <li v-for="form in published_form" :key="form.id">
