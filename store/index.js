@@ -1,55 +1,53 @@
-// const initialState = {
-//   currentUser: {
-//     id: '4407908c-5a9a-4982-9bd9-9eefdcf10dd6',
-//     username: 'dan'
-//   },
-//   authState: {}
-// }
-
 const initialState = {
   authStatus: 'out',
   currentUser: {
     id: null,
     username: null
-  }
+  },
+  token: null
 }
 
 export const state = () => initialState
 
 export const mutations = {
-  setAuthState(state, { status, user }) {
+  setAuthState(state, { status, user, token }) {
     if (user) {
       state.authStatus = status
       const { uid, email } = user
       state.currentUser = { id: uid, username: email }
+      state.token = token
     }
-    // state.authState = authState
-    // state.currentUser = authState.user
+  },
+  resetAuthState(state) {
+    state = { ...initialState }
   }
 }
 
 export const actions = {
-  ON_AUTH_STATE_CHANGED_ACTION({ commit }, { claims, authUser }) {
-    // debugger
-    const user = authUser
-    if (user) {
+  async logout({ commit }) {
+    await this.$fireAuth.signOut()
+    commit('resetAuthState')
+  },
+  async ON_AUTH_STATE_CHANGED_ACTION({ commit }, { claims, authUser }) {
+    if (authUser) {
       // const token = await user.getIdToken()
       // const idTokenResult = await user.getIdTokenResult()
       const hasuraClaim = claims['https://hasura.io/jwt/claims']
 
       if (hasuraClaim) {
-        // debugger
-        commit('setAuthState', { status: 'in', user })
+        const token = await authUser.getIdToken(true)
+        console.log({ authUser, token })
+        commit('setAuthState', { status: 'in', user: authUser, token })
       } else {
         // Check if refresh is required.
-        const metadataRef = this.$fireDb()
-          .ref('metadata/' + user.uid + '/refreshTime')
+        const metadataRef = this.$fireDb
+          .ref('metadata/' + authUser.uid + '/refreshTime')
 
         metadataRef.on('value', async data => {
           if (!data.exists) { return }
           // Force refresh to pick up the latest custom claims changes.
-          const token = await user.getIdToken(true)
-          commit('setAuthState', { status: 'in', user, token })
+          const token = await authUser.getIdToken(true)
+          commit('setAuthState', { status: 'in', user: authUser, token })
         })
       }
     }

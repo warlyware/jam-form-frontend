@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     <h1 class="text-2xl">
-      Formium Alpha
+      Formium
     </h1>
+    <h2 class="text-lg mb-2">
+      Alpha
+    </h2>
     <div>
       <label for="username">
         Email
@@ -57,8 +60,6 @@ export default {
           this.email,
           this.password
         )
-        console.log(this.authStatus, this.currentUser)
-        debugger
         if (this.authStatus === 'in' && this.currentUser.id) {
           this.$router.push('/me')
         }
@@ -72,8 +73,6 @@ export default {
           this.email,
           this.password
         )
-        console.log(this.authStatus, this.currentUser)
-        debugger
         if (this.authStatus === 'in' && this.currentUser.id) {
           this.$router.push('/me')
         }

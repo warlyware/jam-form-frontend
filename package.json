@@ -23,7 +23,8 @@
     "express": "^4.16.4",
     "firebase": "^7.15.5",
     "graphql-tag": "^2.10.3",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.10.3",

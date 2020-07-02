@@ -1,0 +1,9 @@
+mutation ($id: String, $email: String, $username: String) {
+  insert_user(objects: {id: $id, email: $email, username: $username}) {
+    returning {
+      id
+      email
+      username
+    }
+  }
+}

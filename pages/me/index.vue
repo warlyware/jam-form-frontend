@@ -1,7 +1,6 @@
 <template>
-  <div class="container">
-    <h1 class="text-3xl mb-4">hi {{ currentUser.username }}!</h1>
-    <h2 class="text-2xl">My Forms</h2>
+  <div class="text-center mx-auto mt-24">
+    <h1 class="text-2xl">My Forms</h1>
     <ul>
       <li v-for="form in published_form" :key="form.id">
         <span class="font-bold">
@@ -12,20 +11,31 @@
         </nuxt-link>
       </li>
     </ul>
+    <button @click="addForm">
+      Add Form
+    </button>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { v4 as uuidv4 } from 'uuid'
 import forms from '~/apollo/queries/forms/fetch-by-user-id'
 
 export default {
+  layout: 'secure',
   data() {
     return {
       publishedForms: ''
     }
   },
   computed: mapState(['currentUser']),
+  methods: {
+    addForm() {
+      const newFormId = uuidv4()
+      this.$router.push(`/editor/${newFormId}`)
+    }
+  },
   apollo: {
     published_form: {
       prefetch: true,
@@ -37,9 +47,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.container {
-  @apply min-h-screen flex flex-col justify-center items-center text-center mx-auto;
-}
-</style>

@@ -69,6 +69,7 @@ module.exports = {
       measurementId: 'G-M9EJ0E2L5J'
     },
     services: {
+      realtimeDb: true,
       auth: {
         persistence: 'local', // default
         // it is recommended to configure either a mutation or action but you can set both
