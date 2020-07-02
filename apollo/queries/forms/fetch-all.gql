@@ -3,7 +3,6 @@ query {
     id
     userId
     headline
-    text
     campaignId
   }
 }

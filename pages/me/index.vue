@@ -20,7 +20,7 @@
     <div class="w-2/3 p-4">
       <template v-if="selectedCampaign">
         <h1 class="text-2xl mb-2">
-          My Forms
+          Forms
         </h1>
         <button class="border border-black rounded p-2 mb-4" @click="addForm">
           Add Form
@@ -32,6 +32,9 @@
             </span> -
             <nuxt-link :to="{ path: `/form/${form.id}` }">
               Preview
+            </nuxt-link> -
+            <nuxt-link :to="{ path: `/editor/${form.id}` }">
+              Edit
             </nuxt-link>
           </li>
         </ul>
@@ -61,7 +64,11 @@ export default {
   computed: {
     ...mapState(['currentUser']),
     publishedForms() {
-      return this.published_form.filter(({ campaignId }) => campaignId === this.selectedCampaign.id)
+      if (this.published_form && this.published_form.length) {
+        return this.published_form.filter(({ campaignId }) => campaignId === this.selectedCampaign.id)
+      } else {
+        return []
+      }
     },
     campaigns() { return this.campaign }
   },
