@@ -59,7 +59,7 @@ module.exports = {
   ],
   firebase: {
     config: {
-      apiKey: 'AIzaSyC-gFwxJu7-HBS4EIrAzT4WI_QAiKRRN44',
+      apiKey: process.env.FIREBASE_API_KEY,
       authDomain: 'jam-form.firebaseapp.com',
       databaseURL: 'https://jam-form.firebaseio.com',
       projectId: 'jam-form',
