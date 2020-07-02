@@ -1,5 +1,6 @@
 mutation (
   $id: uuid,
+  $name: String,
   $buttonBackgroundColor: String,
   $buttonTextColor: String,
   $buttonText: String,
@@ -9,6 +10,7 @@ mutation (
   update_published_form(
     where: {id: {_eq: $id}},
     _set: {
+      name: $name
       buttonBackgroundColor: $buttonBackgroundColor,
       buttonText: $buttonText,
       buttonTextColor: $buttonTextColor,

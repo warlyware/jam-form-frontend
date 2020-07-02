@@ -1,11 +1,13 @@
 query ($id: uuid) {
   published_form(where: {id: {_eq: $id}}) {
     id
+    name
     headline
     tagline
     buttonBackgroundColor
     buttonText
     buttonTextColor
     campaignId
+    userId
   }
 }

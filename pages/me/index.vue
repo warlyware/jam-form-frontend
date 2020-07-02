@@ -28,7 +28,7 @@
         <ul v-if="publishedForms.length" class="mb-4">
           <li v-for="form in publishedForms" :key="form.id">
             <span class="font-bold">
-              {{ form.headline }}
+              {{ form.name }}
             </span> -
             <nuxt-link :to="{ path: `/form/${form.id}` }" target="_blank">
               Preview
@@ -78,6 +78,9 @@ export default {
         this.selectedCampaign = this.campaigns[0]
       }
     }
+  },
+  mounted() {
+    this.$apollo.queries.published_form.refetch()
   },
   methods: {
     addForm() {

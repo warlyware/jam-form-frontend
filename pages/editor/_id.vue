@@ -4,6 +4,12 @@
     <template v-else>
       <div class="w-1/2 bg-gray-500 h-full p-4 flex flex-col">
         <div class="flex">
+          <label for="name">
+            Name
+          </label>
+          <input v-model="name" class="mb-2 ml-2 flex-grow p-1" type="text" name="name">
+        </div>
+        <div class="flex">
           <label for="headline">
             Headline
           </label>
@@ -88,6 +94,7 @@ export default {
       saving: false,
       loading: 0,
       currentlyEditing: 'buttonBackgroundColor',
+      name: 'Main Form',
       headline: 'My Newsletter',
       tagline: 'Sign up for my great newsletter!',
       buttonText: 'Subscribe',
@@ -118,7 +125,8 @@ export default {
   watch: {
     published_form(newVal) {
       if (newVal && newVal[0]) {
-        const { headline, tagline, buttonText, buttonBackgroundColor, buttonTextColor } = newVal[0]
+        const { headline, tagline, name, buttonText, buttonBackgroundColor, buttonTextColor } = newVal[0]
+        this.name = name
         this.headline = headline
         this.tagline = tagline
         this.buttonText = buttonText
@@ -133,6 +141,7 @@ export default {
       await this.$apollo.mutate({
         mutation: updateForm,
         variables: {
+          name: this.name,
           headline: this.headline,
           tagline: this.tagline,
           buttonText: this.buttonText,
