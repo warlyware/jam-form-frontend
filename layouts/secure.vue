@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="fixed top-0 bg-blue-300 w-screen">
-      <div class="max-w-2xl flex p-4 mx-auto">
+      <div class="max-w-2xl flex py-4 mx-auto">
         <div class="w-1/5">
           {{ currentUser.username }}
         </div>

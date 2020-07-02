@@ -1,5 +1,5 @@
 <template>
-  <published-form v-if="id && published_form[0]" :form="published_form[0]" />
+  <published-form v-if="id && published_form && published_form[0]" :form="published_form[0]" />
   <div v-else>
     Problem loading form
   </div>

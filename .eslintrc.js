@@ -18,6 +18,7 @@ module.exports = {
     'vue/max-attributes-per-line': 'off',
     'vue/html-indent': 'off',
     'vue/html-closing-bracket-newline': 'off',
-    'arrow-parens': 'off'
+    'arrow-parens': 'off',
+    'no-console': 'off'
   }
 }

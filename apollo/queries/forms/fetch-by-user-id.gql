@@ -1,8 +1,11 @@
-query ($userId: uuid) {
+query ($userId: String) {
   published_form(where: {userId: {_eq: $userId}}) {
     id
     headline
-    text
+    tagline
+    buttonBackgroundColor
+    buttonText
+    buttonTextColor
     campaignId
   }
 }

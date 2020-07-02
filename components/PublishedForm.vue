@@ -1,10 +1,10 @@
 <template>
   <div class="p-4">
     <h1 class="text-xl mb-4">
-      {{form.headline}}
+      {{ form.headline }}
     </h1>
     <p class="mb-2">
-      {{form.text}}
+      {{ form.text }}
     </p>
     <input v-model="email"
     class="p-2 border border-black"
