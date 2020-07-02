@@ -38,6 +38,16 @@
             </nuxt-link>
           </li>
         </ul>
+        <h1 class="text-2xl mb-2">
+          Emails
+        </h1>
+        <ul v-if="emails.length" class="mb-4">
+          <li v-for="{ email } in emails" :key="email.id">
+            <span class="font-bold">
+              {{ email }}
+            </span>
+          </li>
+        </ul>
       </template>
       <template v-else>
         <p class="italic">
@@ -53,6 +63,7 @@ import { mapState } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 import forms from '~/apollo/queries/forms/fetch-by-user-id'
 import campaigns from '~/apollo/queries/campaigns/fetch-by-user-id'
+import emails from '~/apollo/queries/email-list/fetch-by-user-id'
 
 export default {
   layout: 'secure',
@@ -70,7 +81,14 @@ export default {
         return []
       }
     },
-    campaigns() { return this.campaign }
+    campaigns() { return this.campaign },
+    emails() {
+      if (this.email_list && this.email_list.length) {
+        return this.email_list.filter(({ campaignId }) => campaignId === this.selectedCampaign.id)
+      } else {
+        return []
+      }
+    }
   },
   watch: {
     campaigns() {
@@ -95,6 +113,14 @@ export default {
     published_form: {
       prefetch: true,
       query: forms,
+      variables() {
+        return { userId: this.currentUser.id }
+      }
+    },
+    email_list: {
+      prefetch: true,
+      query: emails,
+      pollInterval: 60000,
       variables() {
         return { userId: this.currentUser.id }
       }

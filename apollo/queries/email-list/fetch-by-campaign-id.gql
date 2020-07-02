@@ -1,0 +1,5 @@
+query ($campaignId: uuid) {
+  email_list(where: {campaignId: {_eq: $campaignId }}) {
+    email
+  }
+}
