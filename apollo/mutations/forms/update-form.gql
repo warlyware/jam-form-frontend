@@ -1,0 +1,22 @@
+mutation (
+  $id: uuid,
+  $buttonBackgroundColor: String,
+  $buttonTextColor: String,
+  $buttonText: String,
+  $headline: String,
+  $tagline: String
+) {
+  update_published_form(
+    where: {id: {_eq: $id}},
+    _set: {
+      buttonBackgroundColor: $buttonBackgroundColor,
+      buttonText: $buttonText,
+      buttonTextColor: $buttonTextColor,
+      headline: $headline,
+      tagline: $tagline
+    }){
+    returning {
+      id
+    }
+  }
+}

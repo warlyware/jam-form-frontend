@@ -30,7 +30,7 @@
             <span class="font-bold">
               {{ form.headline }}
             </span> -
-            <nuxt-link :to="{ path: `/form/${form.id}` }">
+            <nuxt-link :to="{ path: `/form/${form.id}` }" target="_blank">
               Preview
             </nuxt-link> -
             <nuxt-link :to="{ path: `/editor/${form.id}` }">

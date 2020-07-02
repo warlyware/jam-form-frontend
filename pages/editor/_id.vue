@@ -45,8 +45,11 @@
             class=" order-1" />
           </div>
         </div>
-        <button class="p-2 bg-blue-500 text-white">
-          Save
+        <button class="p-2 bg-blue-500 text-white"
+        :disabled="saving"
+        @click="updateForm">
+          <span v-if="saving">SAVING</span>
+          <span v-else>Save</span>
         </button>
       </div>
       <div class="w-1/2 flex items-center">
@@ -73,6 +76,7 @@
 <script>
 import { Chrome } from 'vue-color'
 import forms from '~/apollo/queries/forms/fetch-by-id.gql'
+import updateForm from '~/apollo/mutations/forms/update-form.gql'
 
 export default {
   components: {
@@ -81,6 +85,7 @@ export default {
   layout: 'secure',
   data() {
     return {
+      saving: false,
       loading: 0,
       currentlyEditing: 'buttonBackgroundColor',
       headline: 'My Newsletter',
@@ -99,11 +104,6 @@ export default {
       variables() {
         return { id: this.$route.params.id }
       },
-      // watchLoading (isLoading, countModifier) {
-      //   this.loading = isLoading
-      //   // isLoading is a boolean
-      //   // countModifier is either 1 or -1
-      // }
       loadingKey: 'loading'
     }
   },
@@ -125,7 +125,23 @@ export default {
         this.colors.buttonBackgroundColor.hex = buttonBackgroundColor
         this.colors.buttonTextColor.hex = buttonTextColor
       }
-      console.log(newVal)
+    }
+  },
+  methods: {
+    async updateForm() {
+      this.saving = true
+      await this.$apollo.mutate({
+        mutation: updateForm,
+        variables: {
+          headline: this.headline,
+          tagline: this.tagline,
+          buttonText: this.buttonText,
+          buttonTextColor: this.colors.buttonTextColor.hex,
+          buttonBackgroundColor: this.colors.buttonBackgroundColor.hex
+        }
+      })
+      this.saving = false
+      this.$toasted.show('Saved!')
     }
   }
 }
