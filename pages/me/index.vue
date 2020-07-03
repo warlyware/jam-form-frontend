@@ -12,7 +12,7 @@
         </button>
       </div>
     </modal>
-    <modal name="embed-code" width="400" height="300">
+    <modal name="embed-code" width="400" height="180">
       <div class="flex flex-col items-center justify-center h-full p-2">
         <textarea v-model="embedCode" readonly class="w-full h-24 text-left border border-black m-2 p-2" />
         <button class="p-2 rounded bg-blue-300 font-bold"
@@ -43,7 +43,7 @@
         <h1 class="text-2xl mb-2">
           {{ selectedCampaign.name }}
         </h1>
-        <button class="border border-black p-2 rounded mb-2"
+        <button class="border border-black p-2 rounded mb-4"
         @click="removeCampaign">
           Delete Campaign
         </button>
