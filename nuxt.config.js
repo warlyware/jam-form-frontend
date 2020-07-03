@@ -21,6 +21,7 @@ module.exports = {
     ]
   },
   env: {
+    BASE_URL: process.env.BASE_URL,
     HASURA_URL: process.env.HASURA_URL
   },
   /*

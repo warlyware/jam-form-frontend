@@ -12,6 +12,15 @@
         </button>
       </div>
     </modal>
+    <modal name="embed-code" width="400" height="300">
+      <div class="flex flex-col items-center justify-center h-full p-2">
+        <textarea v-model="embedCode" readonly class="w-full h-24 text-left border border-black m-2 p-2" />
+        <button class="p-2 rounded bg-blue-300 font-bold"
+        @click="$modal.hide('embed-code')">
+          Close
+        </button>
+      </div>
+    </modal>
     <div class="w-1/3 p-4">
       <h1 class="text-2xl mb-2">
         Campaigns
@@ -55,6 +64,9 @@
             <nuxt-link :to="{ path: `/editor/${form.id}` }">
               Edit
             </nuxt-link> -
+            <button @click="showEmbedCodeModal(form)">
+              Embed
+            </button> -
             <button @click="deleteForm(form.id)">
               Delete
             </button>
@@ -97,10 +109,14 @@ export default {
   data() {
     return {
       newCampaignName: '',
+      selectedFormId: null,
       selectedCampaign: null
     }
   },
   computed: {
+    embedCode() {
+      return `<iframe src="${process.env.BASE_URL}/form/${this.selectedFormId}" frameborder="0"></iframe>`
+    },
     ...mapState(['currentUser']),
     publishedForms() {
       if (this.published_form && this.published_form.length) {
@@ -158,6 +174,10 @@ export default {
 
       const id = data.insert_published_form.returning[0].id
       this.$router.push(`/editor/${id}`)
+    },
+    showEmbedCodeModal({ id }) {
+      this.selectedFormId = id
+      this.$modal.show('embed-code')
     },
     showAddCampaignModal() {
       this.$modal.show('create-campaign')
