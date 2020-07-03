@@ -41,20 +41,27 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      newUser: false
     }
   },
   computed: mapState(['currentUser', 'authStatus']),
+  watch: {
+    currentUser(newVal) {
+      if (!this.newUser && this.authStatus === 'in' && this.currentUser.id) {
+        this.$router.push('/me')
+      }
+    }
+  },
   methods: {
     async createUser() {
       try {
+        this.newUser = true
         await this.$fireAuth.createUserWithEmailAndPassword(
           this.email,
           this.password
         )
-        if (this.authStatus === 'in' && this.currentUser.id) {
-          this.$router.push('/me')
-        }
+        this.newUser = false
       } catch (e) {
         console.error(e)
       }
@@ -65,11 +72,6 @@ export default {
           this.email,
           this.password
         )
-        this.$nextTick(() => {
-          if (this.authStatus === 'in' && this.currentUser.id) {
-            this.$router.push('/me')
-          }
-        })
       } catch (e) {
         console.error(e)
       }
