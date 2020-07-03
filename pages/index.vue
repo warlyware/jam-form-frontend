@@ -37,19 +37,11 @@
 <script>
 import { mapState } from 'vuex'
 
-import forms from '~/apollo/queries/forms/fetch-all.gql'
-
 export default {
   data() {
     return {
       email: '',
       password: ''
-    }
-  },
-  apollo: {
-    published_form: {
-      prefetch: true,
-      query: forms
     }
   },
   computed: mapState(['currentUser', 'authStatus']),
@@ -73,9 +65,11 @@ export default {
           this.email,
           this.password
         )
-        if (this.authStatus === 'in' && this.currentUser.id) {
-          this.$router.push('/me')
-        }
+        this.$nextTick(() => {
+          if (this.authStatus === 'in' && this.currentUser.id) {
+            this.$router.push('/me')
+          }
+        })
       } catch (e) {
         console.error(e)
       }
