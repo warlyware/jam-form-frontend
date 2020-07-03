@@ -1,0 +1,9 @@
+
+mutation ($userId: String, $name: String) {
+  insert_campaign(objects: {userId: $userId, name: $name}) {
+    returning {
+      id
+      name
+    }
+  }
+}

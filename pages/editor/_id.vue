@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="w-1/2">
-            <color-picker v-if="currentlyEditing.length" v-model="colors[currentlyEditing]"
+            <color-picker v-if="!loading && currentlyEditing.length" v-model="colors[currentlyEditing]"
             class=" order-1" />
           </div>
         </div>
@@ -93,7 +93,7 @@ export default {
     return {
       saving: false,
       loading: 0,
-      currentlyEditing: 'buttonBackgroundColor',
+      currentlyEditing: '',
       name: 'Main Form',
       headline: 'My Newsletter',
       tagline: 'Sign up for my great newsletter!',
@@ -132,6 +132,7 @@ export default {
         this.buttonText = buttonText
         this.colors.buttonBackgroundColor.hex = buttonBackgroundColor
         this.colors.buttonTextColor.hex = buttonTextColor
+        this.currentlyEditing = 'buttonBackgroundColor'
       }
     }
   },
@@ -141,6 +142,7 @@ export default {
       await this.$apollo.mutate({
         mutation: updateForm,
         variables: {
+          id: this.$route.params.id,
           name: this.name,
           headline: this.headline,
           tagline: this.tagline,
@@ -150,7 +152,7 @@ export default {
         }
       })
       this.saving = false
-      this.$toasted.show('Saved!')
+      this.$toasted.show('Saved')
     }
   }
 }

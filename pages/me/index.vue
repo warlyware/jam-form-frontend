@@ -1,11 +1,23 @@
 <template>
   <div class="flex max-w-2xl mx-auto">
+    <modal name="create-campaign" width="250" height="150" @before-close="addCampaign">
+      <div class="flex flex-col items-center justify-center h-full">
+        Campain Name:
+        <input v-model="newCampaignName"
+        type="text"
+        class="p-1 border border-black mb-2">
+        <button class="p-2 rounded bg-blue-300 font-bold"
+        @click="$modal.hide('create-campaign'); addCampaign">
+          Create
+        </button>
+      </div>
+    </modal>
     <div class="w-1/3 p-4">
       <h1 class="text-2xl mb-2">
         Campaigns
       </h1>
       <button class="border border-black rounded p-2 mb-4"
-      @click="addCampaign">
+      @click="showAddCampaignModal">
         Add Campaign
       </button>
       <ul class="mb-4 cursor-pointer">
@@ -20,8 +32,15 @@
     <div class="w-2/3 p-4">
       <template v-if="selectedCampaign">
         <h1 class="text-2xl mb-2">
-          Forms
+          {{ selectedCampaign.name }}
         </h1>
+        <button class="border border-black p-2 rounded mb-2"
+        @click="removeCampaign">
+          Delete Campaign
+        </button>
+        <h2 class="text-lg mb-2">
+          Forms
+        </h2>
         <button class="border border-black rounded p-2 mb-4" @click="addForm">
           Add Form
         </button>
@@ -35,12 +54,15 @@
             </nuxt-link> -
             <nuxt-link :to="{ path: `/editor/${form.id}` }">
               Edit
-            </nuxt-link>
+            </nuxt-link> -
+            <button @click="deleteForm(form.id)">
+              Delete
+            </button>
           </li>
         </ul>
-        <h1 class="text-2xl mb-2">
+        <h2 class="text-lg mb-2">
           Emails
-        </h1>
+        </h2>
         <ul v-if="emails.length" class="mb-4">
           <li v-for="{ email } in emails" :key="email.id">
             <span class="font-bold">
@@ -60,15 +82,21 @@
 
 <script>
 import { mapState } from 'vuex'
-import { v4 as uuidv4 } from 'uuid'
+import generate from 'project-name-generator'
+
 import forms from '~/apollo/queries/forms/fetch-by-user-id'
 import campaigns from '~/apollo/queries/campaigns/fetch-by-user-id'
 import emails from '~/apollo/queries/email-list/fetch-by-user-id'
+import addCampaign from '~/apollo/mutations/campaigns/create-campaign'
+import deleteCampaign from '~/apollo/mutations/campaigns/remove-campaign'
+import addForm from '~/apollo/mutations/forms/create-form'
+import deleteForm from '~/apollo/mutations/forms/remove-form'
 
 export default {
   layout: 'secure',
   data() {
     return {
+      newCampaignName: '',
       selectedCampaign: null
     }
   },
@@ -98,15 +126,51 @@ export default {
     }
   },
   mounted() {
-    this.$apollo.queries.published_form.refetch()
+    this.refetchForms()
   },
   methods: {
-    addForm() {
-      const newFormId = uuidv4()
-      this.$router.push(`/editor/${newFormId}`)
+    refetchCampaigns() { this.$apollo.queries.campaign.refetch() },
+    refetchForms() { this.$apollo.queries.published_form.refetch() },
+    async deleteForm(id) {
+      await this.$apollo.mutate({
+        mutation: deleteForm,
+        variables: { id }
+      })
+      this.$toasted.show('Form Deleted')
+      this.refetchForms()
     },
-    addCampaign() {
+    async removeCampaign() {
+      await this.$apollo.mutate({
+        mutation: deleteCampaign,
+        variables: { id: this.selectedCampaign.id }
+      })
+      this.refetchCampaigns()
+    },
+    async addForm() {
+      const { data } = await this.$apollo.mutate({
+        mutation: addForm,
+        variables: {
+          campaignId: this.selectedCampaign.id,
+          userId: this.currentUser.id,
+          name: generate().dashed
+        }
+      })
 
+      const id = data.insert_published_form.returning[0].id
+      this.$router.push(`/editor/${id}`)
+    },
+    showAddCampaignModal() {
+      this.$modal.show('create-campaign')
+    },
+    async addCampaign() {
+      await this.$apollo.mutate({
+        mutation: addCampaign,
+        variables: {
+          userId: this.currentUser.id,
+          name: this.newCampaignName
+        }
+      })
+      this.refetchCampaigns()
     }
   },
   apollo: {

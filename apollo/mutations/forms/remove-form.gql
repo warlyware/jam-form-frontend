@@ -1,0 +1,7 @@
+mutation ($id: uuid) {
+  delete_published_form(where: {id: {_eq: $id}}) {
+    returning {
+      id
+    }
+  }
+}

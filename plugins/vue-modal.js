@@ -1,8 +1,4 @@
 import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.nocss'
+import VModal from 'vue-js-modal'
 
 Vue.use(VModal)
-
-export default function (ctx, inject) {
-  inject('modal', VModal)
-}

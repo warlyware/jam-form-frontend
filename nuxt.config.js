@@ -36,7 +36,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/vue-modal.js',
+    { src: '~/plugins/vue-modal', mode: 'client' },
     '~/plugins/vue-toasted.js'
   ],
   /*

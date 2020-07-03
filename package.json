@@ -24,6 +24,7 @@
     "firebase": "^7.15.5",
     "graphql-tag": "^2.10.3",
     "nuxt": "^2.0.0",
+    "project-name-generator": "^2.1.7",
     "uuid": "^8.2.0",
     "vue-color": "^2.7.1",
     "vue-js-modal": "^2.0.0-rc.3",

@@ -1,0 +1,7 @@
+mutation ($name: String, $userId: String, $campaignId: uuid) {
+  insert_published_form(objects: {name: $name, userId: $userId, campaignId: $campaignId}) {
+    returning {
+      id
+    }
+  }
+}
